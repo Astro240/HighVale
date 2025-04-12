@@ -30175,6 +30175,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 308231205}
     m_Modifications:
     - target: {fileID: 1466221411166044216, guid: 18e5c2d27a8cc994da7112264105e6df, type: 3}
+      propertyPath: m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1466221411166044216, guid: 18e5c2d27a8cc994da7112264105e6df, type: 3}
       propertyPath: MaxDistance
       value: 160
       objectReference: {fileID: 0}
@@ -37720,6 +37724,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 308231205}
     m_Modifications:
+    - target: {fileID: 1466221411166044216, guid: 18e5c2d27a8cc994da7112264105e6df, type: 3}
+      propertyPath: m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1466221411166044216, guid: 18e5c2d27a8cc994da7112264105e6df, type: 3}
       propertyPath: MaxDistance
       value: 160
@@ -50729,6 +50737,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 308231205}
     m_Modifications:
     - target: {fileID: 1466221411166044216, guid: 18e5c2d27a8cc994da7112264105e6df, type: 3}
+      propertyPath: m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1466221411166044216, guid: 18e5c2d27a8cc994da7112264105e6df, type: 3}
       propertyPath: MaxDistance
       value: 160
       objectReference: {fileID: 0}
@@ -62283,9 +62295,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6653710872784368482, guid: aa5fff070612b094da17ab134800d99f, type: 2}
-  m_audioClip: {fileID: 8300000, guid: acb2342a686081c4a84069248afc3c47, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2b91779e709130b47805f024f2d7ef5b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
