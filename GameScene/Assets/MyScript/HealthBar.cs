@@ -7,6 +7,8 @@ public class HealthBar : MonoBehaviour
 {
     public Combat playerCombat; // Reference to the Combat script
     public Slider healthSlider;  // Reference to the UI Slider
+    public Slider easeHealthSlider;
+    public float lerpSpeed = 0.05f;
 
     void Start()
     {
@@ -24,5 +26,6 @@ public class HealthBar : MonoBehaviour
         {
             healthSlider.value = playerCombat.health; // Update the slider value
         }
+        easeHealthSlider.value = Mathf.Lerp(easeHealthSlider.value, playerCombat.health,lerpSpeed);
     }
 }
