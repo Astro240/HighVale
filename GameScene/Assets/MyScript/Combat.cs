@@ -24,7 +24,11 @@ public class Combat : MonoBehaviour
 
     public void Attack()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
+        if (stamina >= staminaCost)
+        {
+            stamina -= staminaCost;
+        }
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Enemy"))
@@ -41,7 +45,6 @@ public class Combat : MonoBehaviour
     {
         if (stamina >= staminaCost)
         {
-            stamina -= staminaCost;  
             Debug.Log("Attacked! Dealt " + attackDamage + " damage.");
 
             Enemy targetCombat = target.GetComponent<Enemy>();
