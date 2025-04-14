@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float health = 10f;          // Enemy's health
-    public float attackDamage = 5f;     // Damage dealt by the enemy
+    public float attackDamage;     // Damage dealt by the enemy
     public float attackRange = 1.5f;     // Range within which the enemy can attack
     public float attackCooldown = 1.5f;  // Time between attacks
 
