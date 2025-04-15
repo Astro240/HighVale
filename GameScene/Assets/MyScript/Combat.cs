@@ -5,13 +5,18 @@ using UnityEngine;
 public class Combat : MonoBehaviour
 {
     public float health = 100f;
-    public float stamina = 100f;      
-    public float attackDamage = 10f;  
-    public float staminaCost = 20f;    
-    public float attackRange = 2f;     
+    public float stamina = 100f;
+    public float attackDamage = 10f;
+    public float staminaCost = 20f;
+    public float attackRange = 2f;
+    public float regenAmount = 10f;    // Amount of stamina to regenerate per interval
+    public float regenInterval = 1f;   // Time between stamina regenerations
+    private Coroutine regenCoroutine;
+    private Animator mAnimator;
 
     void Start()
     {
+        mAnimator = GetComponent<Animator>();
     }
 
     void Update()
@@ -27,8 +32,27 @@ public class Combat : MonoBehaviour
         if (stamina >= staminaCost)
         {
             stamina -= staminaCost;
+
+            // Stop regenerating stamina while attacking
+            if (regenCoroutine != null)
+            {
+                StopCoroutine(regenCoroutine);
+                regenCoroutine = null;
+            }
         }
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
+        else
+        {
+            Debug.Log("Not enough stamina to attack!");
+            return;
+        }
+
+        // Start stamina regeneration after a delay
+        if (regenCoroutine == null)
+        {
+            regenCoroutine = StartCoroutine(RegenerateStamina(100f, 50f)); // Adjust the regenSpeed as needed
+        }
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Enemy"))
@@ -39,27 +63,21 @@ public class Combat : MonoBehaviour
         }
 
         Debug.Log("No enemies in range.");
+
     }
 
     private void DamageEnemy(GameObject target)
     {
-        if (stamina >= staminaCost)
-        {
-            Debug.Log("Attacked! Dealt " + attackDamage + " damage.");
+        Debug.Log("Attacked! Dealt " + attackDamage + " damage.");
 
-            Enemy targetCombat = target.GetComponent<Enemy>();
-            if (targetCombat != null)
-            {
-                targetCombat.TakeDamage(attackDamage);
-            }
-            else
-            {
-                Debug.Log("Target does not have an Enemy component.");
-            }
+        Enemy targetCombat = target.GetComponent<Enemy>();
+        if (targetCombat != null)
+        {
+            targetCombat.TakeDamage(attackDamage);
         }
         else
         {
-            Debug.Log("Not enough stamina to attack!");
+            Debug.Log("Target does not have an Enemy component.");
         }
     }
 
@@ -76,17 +94,23 @@ public class Combat : MonoBehaviour
 
     private void Die()
     {
+        if (mAnimator != null)
+        {
+            mAnimator.SetTrigger("Death");
+        }
         Debug.Log("Player has died!");
     }
 
-    private IEnumerator RegenerateStamina(float regenAmount, float interval)
+    private IEnumerator RegenerateStamina(float targetStamina, float regenSpeed)
     {
-        while (stamina < 100f)
-        {
-            stamina += regenAmount;
-            stamina = Mathf.Clamp(stamina, 0, 100f);
-            yield return new WaitForSeconds(interval);
-        }
-    }
+        yield return new WaitForSeconds(1f); // Wait for 10 seconds before starting regeneration
 
+        while (stamina < targetStamina)
+        {
+            stamina += regenSpeed * Time.deltaTime; // Smoothly increase stamina
+            stamina = Mathf.Clamp(stamina, 0, targetStamina);
+            yield return null; // Wait for the next frame
+        }
+        regenCoroutine = null; // Reset the coroutine reference when done
+    }
 }
