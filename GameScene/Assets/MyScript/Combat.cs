@@ -13,6 +13,7 @@ public class Combat : MonoBehaviour
     public float regenInterval = 1f;   // Time between stamina regenerations
     private Coroutine regenCoroutine;
     private Animator mAnimator;
+    private bool isDead = false; // Track if the player is dead
 
     void Start()
     {
@@ -21,6 +22,8 @@ public class Combat : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return; // Stop processing input if dead
+
         if (Input.GetMouseButtonDown(0))
         {
             Attack();
@@ -29,6 +32,8 @@ public class Combat : MonoBehaviour
 
     public void Attack()
     {
+        if (isDead) return; // Prevent attack if dead
+
         if (stamina >= staminaCost)
         {
             stamina -= staminaCost;
@@ -63,7 +68,6 @@ public class Combat : MonoBehaviour
         }
 
         Debug.Log("No enemies in range.");
-
     }
 
     private void DamageEnemy(GameObject target)
@@ -83,6 +87,8 @@ public class Combat : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return; // Prevent taking damage if dead
+
         health -= damage;
         Debug.Log("Took damage: " + damage + ". Remaining health: " + health);
 
@@ -98,12 +104,13 @@ public class Combat : MonoBehaviour
         {
             mAnimator.SetTrigger("Death");
         }
+        isDead = true; // Set dead state
         Debug.Log("Player has died!");
     }
 
     private IEnumerator RegenerateStamina(float targetStamina, float regenSpeed)
     {
-        yield return new WaitForSeconds(1f); // Wait for 10 seconds before starting regeneration
+        yield return new WaitForSeconds(1f); // Wait for 1 second before starting regeneration
 
         while (stamina < targetStamina)
         {
