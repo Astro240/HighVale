@@ -25598,8 +25598,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
-  attackDamage: 70
-  attackRange: 1.5
+  attackDamage: 45
+  attackRange: 1.2
   attackCooldown: 1.5
 --- !u!1001 &892377218
 PrefabInstance:
@@ -62800,6 +62800,10 @@ PrefabInstance:
       propertyPath: Gravity
       value: -15
       objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: MoveSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8537869080933219519, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -62863,6 +62867,10 @@ PrefabInstance:
     - target: {fileID: 8537869081416617044, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8537869081856701759, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: regenAmount
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}

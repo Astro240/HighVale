@@ -9,8 +9,8 @@ public class Combat : MonoBehaviour
     public float attackDamage = 10f;
     public float staminaCost = 20f;
     public float attackRange = 2f;
-    public float regenAmount = 10f;    // Amount of stamina to regenerate per interval
-    public float regenInterval = 1f;   // Time between stamina regenerations
+    public float regenAmount;   
+    public float regenInterval = 1f; 
     private Coroutine regenCoroutine;
     private Animator mAnimator;
     private bool isDead = false; // Track if the player is dead
@@ -54,7 +54,7 @@ public class Combat : MonoBehaviour
         // Start stamina regeneration after a delay
         if (regenCoroutine == null)
         {
-            regenCoroutine = StartCoroutine(RegenerateStamina(100f, 50f)); // Adjust the regenSpeed as needed
+            regenCoroutine = StartCoroutine(RegenerateStamina(100f, regenAmount)); // Adjust the regenSpeed as needed
         }
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
