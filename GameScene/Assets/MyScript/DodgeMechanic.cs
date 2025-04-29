@@ -13,10 +13,10 @@ public class DodgeMechanic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (mAnimator != null) {
-            if (Input.GetKey(KeyCode.C)) {
-                mAnimator.SetTrigger("Dodge");
-            }
-        }
+        //if (mAnimator != null) {
+            //if (Input.GetKeyDown(KeyCode.C)) {
+                //mAnimator.SetTrigger("Dodge");
+            //}
+        //}
     }
 }

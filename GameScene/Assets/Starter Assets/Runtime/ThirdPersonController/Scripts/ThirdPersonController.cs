@@ -2,6 +2,7 @@
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
+using System.Collections;
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
@@ -132,6 +133,10 @@ namespace StarterAssets
             }
         }
 
+        [SerializeField] AnimationCurve dodgeCurve;
+        bool isDodge;
+        float dodgeTimer;
+
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
@@ -150,7 +155,10 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            Keyframe dodge_lastFrame = dodgeCurve[dodgeCurve.length - 1];
+            dodgeTimer = dodge_lastFrame.time;
         }
+
 
         private void Update()
         {
@@ -158,7 +166,33 @@ namespace StarterAssets
 
             JumpAndGravity();
             GroundedCheck();
-            Move();
+            if(!isDodge) Move();
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                if (!isDodge) StartCoroutine(Dodge());
+            }
+        }
+        IEnumerator Dodge()
+        {
+            isDodge = true;
+            float timer = 0;
+            _animator.SetTrigger("Dodge");
+
+            // Calculate dodge direction (forward) based on current rotation
+            Vector3 dodgeDirection = transform.forward;
+
+            while (timer < dodgeTimer)
+            {
+                float speed = dodgeCurve.Evaluate(timer) *5;
+                Vector3 moveDirection = dodgeDirection * speed; // Use dodgeDirection here
+                _controller.Move(moveDirection * Time.deltaTime);
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            isDodge = false;
         }
 
         private void LateUpdate()
