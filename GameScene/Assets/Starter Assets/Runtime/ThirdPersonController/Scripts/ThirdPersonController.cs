@@ -181,12 +181,26 @@ namespace StarterAssets
 
             // Calculate dodge direction (forward) based on current rotation
             Vector3 dodgeDirection = transform.forward;
+            Vector3 verticalVelocity = Vector3.zero; // Initialize vertical velocity
 
             while (timer < dodgeTimer)
             {
-                float speed = dodgeCurve.Evaluate(timer) *5;
-                Vector3 moveDirection = dodgeDirection * speed; // Use dodgeDirection here
-                _controller.Move(moveDirection * Time.deltaTime);
+                float speed = dodgeCurve.Evaluate(timer) * 5;
+                Vector3 moveDirection = dodgeDirection * speed;
+
+                // Apply gravity
+                if (!_controller.isGrounded)
+                {
+                    verticalVelocity.y += Physics.gravity.y * Time.deltaTime;
+                }
+                else
+                {
+                    verticalVelocity.y = 0; // Reset vertical velocity when grounded
+                }
+
+                // Combine horizontal and vertical movement
+                Vector3 finalMoveDirection = moveDirection + verticalVelocity;
+                _controller.Move(finalMoveDirection * Time.deltaTime);
 
                 timer += Time.deltaTime;
                 yield return null;
