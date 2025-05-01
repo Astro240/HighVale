@@ -25598,8 +25598,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
-  attackDamage: 70
-  attackRange: 1.5
+  attackDamage: 45
+  attackRange: 1.2
   attackCooldown: 1.5
 --- !u!1001 &892377218
 PrefabInstance:
@@ -45092,6 +45092,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7335051610645913851, guid: 3dbdfd849717a50498148df6c7e5d2de, type: 3}
   m_PrefabInstance: {fileID: 1542760683}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1544668568 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5417980363640913894, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+  m_PrefabInstance: {fileID: 8537869081469751461}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1544668577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544668568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3085ea6e31a0f2c48b60e5a949a6af26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1546104387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62779,6 +62796,54 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: Gravity
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: MoveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: dodgeCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: dodgeCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: dodgeCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: dodgeCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: dodgeCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: dodgeCurve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: dodgeCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: dodgeCurve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: dodgeCurve.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417980363640913901, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: dodgeCurve.m_Curve.Array.data[1].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
     - target: {fileID: 8537869080933219519, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -62842,6 +62907,10 @@ PrefabInstance:
     - target: {fileID: 8537869081416617044, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8537869081856701759, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
+      propertyPath: regenAmount
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfe621e2d8c1cf2408b933303e6aadb2, type: 3}
