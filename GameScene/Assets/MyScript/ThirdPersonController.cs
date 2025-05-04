@@ -134,7 +134,7 @@ namespace StarterAssets
         }
 
         [SerializeField] AnimationCurve dodgeCurve;
-        bool isDodge;
+        public bool isDodge;
         float dodgeTimer;
 
         private void Start()

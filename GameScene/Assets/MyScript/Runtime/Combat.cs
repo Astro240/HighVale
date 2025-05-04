@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarterAssets;
 
 public class Combat : MonoBehaviour
 {
@@ -14,9 +15,11 @@ public class Combat : MonoBehaviour
     private Coroutine regenCoroutine;
     private Animator mAnimator;
     private bool isDead = false; // Track if the player is dead
+    private StarterAssets.ThirdPersonController pl;
 
     void Start()
     {
+        pl = GetComponent<ThirdPersonController>();
         mAnimator = GetComponent<Animator>();
     }
 
@@ -33,7 +36,6 @@ public class Combat : MonoBehaviour
     public void Attack()
     {
         if (isDead) return; // Prevent attack if dead
-
         if (stamina >= staminaCost)
         {
             stamina -= staminaCost;
@@ -50,6 +52,7 @@ public class Combat : MonoBehaviour
             Debug.Log("Not enough stamina to attack!");
             return;
         }
+        mAnimator.SetTrigger("Attack1");
 
         // Start stamina regeneration after a delay
         if (regenCoroutine == null)
@@ -88,7 +91,7 @@ public class Combat : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if (isDead) return; // Prevent taking damage if dead
-
+        if (pl.isDodge) return;
         health -= damage;
         Debug.Log("Took damage: " + damage + ". Remaining health: " + health);
 
