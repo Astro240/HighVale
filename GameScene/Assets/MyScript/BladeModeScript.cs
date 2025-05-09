@@ -19,10 +19,10 @@ public class BladeModeScript : MonoBehaviour
 
     public Transform cutPlane;
 
-    public CinemachineFreeLook TPCamera;
+    public CinemachineVirtualCamera TPCamera; // Changed to CinemachineVirtualCamera
 
     public Material crossMaterial;
-    private CinemachineComposer[] composers;
+    private CinemachineComposer composer; // Change to a single composer
 
     public LayerMask layerMask;
     ParticleSystem[] particles;
@@ -35,18 +35,16 @@ public class BladeModeScript : MonoBehaviour
 
         anim = GetComponent<Animator>();
         normalFOV = TPCamera.m_Lens.FieldOfView;
-        composers = new CinemachineComposer[3];
-        for (int i = 0; i < 3; i++)
-            composers[i] = TPCamera.GetRig(i).GetCinemachineComponent<CinemachineComposer>();
-        normalOffset = composers[0].m_TrackedObjectOffset;
+        composer = TPCamera.GetCinemachineComponent<CinemachineComposer>(); // Get the composer directly
+        normalOffset = composer.m_TrackedObjectOffset;
 
         particles = cutPlane.GetComponentsInChildren<ParticleSystem>();
     }
 
     void Update()
     {
-        anim.SetFloat("x", Mathf.Clamp(Camera.main.transform.GetChild(0).localPosition.x + 0.3f,-1,1));
-        anim.SetFloat("y", Mathf.Clamp(Camera.main.transform.GetChild(0).localPosition.y + .18f, -1,1));
+        anim.SetFloat("x", Mathf.Clamp(Camera.main.transform.GetChild(0).localPosition.x + 0.3f, -1, 1));
+        anim.SetFloat("y", Mathf.Clamp(Camera.main.transform.GetChild(0).localPosition.y + .18f, -1, 1));
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -60,14 +58,13 @@ public class BladeModeScript : MonoBehaviour
 
         if (bladeMode)
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation,Camera.main.transform.rotation,.2f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Camera.main.transform.rotation, .2f);
             RotatePlane();
 
             if (Input.GetMouseButtonDown(0))
             {
                 cutPlane.GetChild(0).DOComplete();
                 cutPlane.GetChild(0).DOLocalMoveX(cutPlane.GetChild(0).localPosition.x * -1, .05f).SetEase(Ease.OutExpo);
-                //ShakeCamera();
                 Slice();
             }
         }
@@ -111,7 +108,6 @@ public class BladeModeScript : MonoBehaviour
 
     public SlicedHull SliceObject(GameObject obj, Material crossSectionMaterial = null)
     {
-        // slice the provided object using the transforms of this object
         if (obj.GetComponent<MeshFilter>() == null)
             return null;
 
@@ -119,45 +115,43 @@ public class BladeModeScript : MonoBehaviour
     }
 
     public void Zoom(bool state)
+{
+    bladeMode = state;
+    anim.SetBool("bladeMode", bladeMode);
+
+    cutPlane.localEulerAngles = Vector3.zero;
+    cutPlane.gameObject.SetActive(state);
+
+    // Get the composer directly
+    CinemachineComposer composer = TPCamera.GetCinemachineComponent<CinemachineComposer>();
+
+    float fov = state ? zoomFOV : normalFOV;
+    Vector3 offset = state ? zoomOffset : normalOffset;
+    float timeScale = state ? .2f : 1;
+
+    DOVirtual.Float(Time.timeScale, timeScale, .02f, SetTimeScale);
+    DOVirtual.Float(TPCamera.m_Lens.FieldOfView, fov, .1f, FieldOfView);
+    DOVirtual.Float(composer.m_TrackedObjectOffset.x, offset.x, .2f, CameraOffset).SetUpdate(true);
+
+    if (state)
     {
-        bladeMode = state;
-        anim.SetBool("bladeMode", bladeMode);
-
-        cutPlane.localEulerAngles = Vector3.zero;
-        cutPlane.gameObject.SetActive(state);
-
-        string x = state ? "Horizontal" : "Mouse X"; string y = state ? "Vertical" : "Mouse Y";
-        TPCamera.m_XAxis.m_InputAxisName = x; TPCamera.m_YAxis.m_InputAxisName = y;
-
-        float fov = state ? zoomFOV : normalFOV;
-        Vector3 offset = state ? zoomOffset : normalOffset;
-        float timeScale = state ? .2f : 1;
-
-        DOVirtual.Float(Time.timeScale, timeScale, .02f, SetTimeScale);
-        DOVirtual.Float(TPCamera.m_Lens.FieldOfView, fov, .1f, FieldOfView);
-        DOVirtual.Float(composers[0].m_TrackedObjectOffset.x, offset.x, .2f, CameraOffset).SetUpdate(true);
-
-        //Stop character movement
-        if (state)
-        {
-            //GetComponent<Animator>().SetTrigger("draw");
-        }
-        else
-        {
-            transform.DORotate(new Vector3(0, transform.eulerAngles.y, 0), .2f);
-        }
-
-        //POST PROCESSING
-        float vig = state ? .6f : 0;
-        float chrom = state ? 1 : 0;
-        float depth = state ? 4.8f : 8;
-        float vig2 = state ? 0f : .6f;
-        float chrom2 = state ? 0 : 1;
-        float depth2 = state ? 8 : 4.8f;
-        DOVirtual.Float(chrom2, chrom, .1f, Chromatic);
-        DOVirtual.Float(vig2, vig, .1f, Vignette);
-        DOVirtual.Float(depth2, depth, .1f, DepthOfField);
+        // GetComponent<Animator>().SetTrigger("draw");
     }
+    else
+    {
+        transform.DORotate(new Vector3(0, transform.eulerAngles.y, 0), .2f);
+    }
+
+    float vig = state ? .6f : 0;
+    float chrom = state ? 1 : 0;
+    float depth = state ? 4.8f : 8;
+    float vig2 = state ? 0f : .6f;
+    float chrom2 = state ? 0 : 1;
+    float depth2 = state ? 8 : 4.8f;
+    DOVirtual.Float(chrom2, chrom, .1f, Chromatic);
+    DOVirtual.Float(vig2, vig, .1f, Vignette);
+    DOVirtual.Float(depth2, depth, .1f, DepthOfField);
+}
 
     public void RotatePlane()
     {
@@ -171,17 +165,13 @@ public class BladeModeScript : MonoBehaviour
 
     void CameraOffset(float x)
     {
-        foreach (CinemachineComposer c in composers)
-        {
-            c.m_TrackedObjectOffset.Set(x, c.m_TrackedObjectOffset.y, c.m_TrackedObjectOffset.z);
-        }
+        composer.m_TrackedObjectOffset.Set(x, composer.m_TrackedObjectOffset.y, composer.m_TrackedObjectOffset.z);
     }
 
     void SetTimeScale(float time)
     {
         Time.timeScale = time;
     }
-
 
     void HandleDebug()
     {
