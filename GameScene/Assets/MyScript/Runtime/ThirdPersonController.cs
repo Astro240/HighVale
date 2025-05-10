@@ -3,10 +3,8 @@
 using UnityEngine.InputSystem;
 #endif
 using System.Collections;
-
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
-
 namespace StarterAssets
 {
     [RequireComponent(typeof(CharacterController))]
@@ -110,7 +108,7 @@ namespace StarterAssets
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
-
+        public bool bladeMode;
         private bool IsCurrentDeviceMouse
         {
             get
@@ -140,7 +138,7 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+            bladeMode = false;
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -166,7 +164,7 @@ namespace StarterAssets
 
             JumpAndGravity();
             GroundedCheck();
-            if(!isDodge) Move();
+            if(!isDodge && !bladeMode) Move();
 
             if (Input.GetKeyDown(KeyCode.C))
             {

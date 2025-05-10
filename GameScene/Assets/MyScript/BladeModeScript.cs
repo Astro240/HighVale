@@ -6,6 +6,7 @@ using DG.Tweening;
 using Cinemachine;
 using EzySlice;
 using UnityEngine.Rendering.PostProcessing;
+using StarterAssets;
 
 public class BladeModeScript : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class BladeModeScript : MonoBehaviour
     public Vector3 zoomOffset;
     private float normalFOV;
     public float zoomFOV = 15;
+
+    private ThirdPersonController tl;
 
     public Transform cutPlane;
 
@@ -32,7 +35,7 @@ public class BladeModeScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         cutPlane.gameObject.SetActive(false);
-
+        tl = GetComponent<ThirdPersonController>();
         anim = GetComponent<Animator>();
         normalFOV = TPCamera.m_Lens.FieldOfView;
         composer = TPCamera.GetCinemachineComponent<CinemachineComposer>(); // Get the composer directly
@@ -104,6 +107,13 @@ public class BladeModeScript : MonoBehaviour
         collider.convex = true;
 
         rb.AddExplosionForce(100, go.transform.position, 20);
+        StartCoroutine(DestroyAfterDelay(go, 2f)); // Change 5f to the desired delay in seconds
+    }
+
+    private IEnumerator DestroyAfterDelay(GameObject go, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(go);
     }
 
     public SlicedHull SliceObject(GameObject obj, Material crossSectionMaterial = null)
@@ -117,6 +127,8 @@ public class BladeModeScript : MonoBehaviour
     public void Zoom(bool state)
 {
     bladeMode = state;
+    tl.bladeMode = state;
+        tl.LockCameraPosition = state;
     anim.SetBool("bladeMode", bladeMode);
 
     cutPlane.localEulerAngles = Vector3.zero;
@@ -129,7 +141,7 @@ public class BladeModeScript : MonoBehaviour
     Vector3 offset = state ? zoomOffset : normalOffset;
     float timeScale = state ? .2f : 1;
 
-    DOVirtual.Float(Time.timeScale, timeScale, .02f, SetTimeScale);
+    //DOVirtual.Float(Time.timeScale, timeScale, .02f, SetTimeScale);
     DOVirtual.Float(TPCamera.m_Lens.FieldOfView, fov, .1f, FieldOfView);
     DOVirtual.Float(composer.m_TrackedObjectOffset.x, offset.x, .2f, CameraOffset).SetUpdate(true);
 
