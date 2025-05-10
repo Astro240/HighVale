@@ -1,5 +1,5 @@
 {
-    "m_SGVersion": 2,
+    "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.GraphData",
     "m_ObjectId": "f8fed67ccd6a4d6caf7a559c205f43e5",
     "m_Properties": [
@@ -8,6 +8,12 @@
         }
     ],
     "m_Keywords": [],
+    "m_Dropdowns": [],
+    "m_CategoryData": [
+        {
+            "m_Id": "e08c84446d7647b5a08db7602cfa9d34"
+        }
+    ],
     "m_Nodes": [
         {
             "m_Id": "9ef1619eceb0470ab98a54978d64ccc2"
@@ -154,10 +160,11 @@
         "serializedMesh": {
             "m_SerializedMesh": "{\"mesh\":{\"instanceID\":0}}",
             "m_Guid": ""
-        }
+        },
+        "preventRotation": false
     },
     "m_Path": "Sub Graphs",
-    "m_ConcretePrecision": 0,
+    "m_GraphPrecision": 0,
     "m_PreviewMode": 2,
     "m_OutputNode": {
         "m_Id": "9ef1619eceb0470ab98a54978d64ccc2"
@@ -703,9 +710,13 @@
         "m_GuidSerialized": "601c9f97-3561-4e02-84f5-6d0119d42f2e"
     },
     "m_Name": "Depth_Distance",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_be576ea11dcb45c986150246378f5f3b",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
@@ -764,6 +775,18 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "e08c84446d7647b5a08db7602cfa9d34",
+    "m_Name": "",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "be576ea11dcb45c986150246378f5f3b"
+        }
+    ]
 }
 
 {

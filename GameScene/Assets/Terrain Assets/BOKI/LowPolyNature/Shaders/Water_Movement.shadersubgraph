@@ -1,5 +1,5 @@
 {
-    "m_SGVersion": 2,
+    "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.GraphData",
     "m_ObjectId": "8bf06604841d4f598cf3da4fdfcd96bf",
     "m_Properties": [
@@ -11,6 +11,12 @@
         }
     ],
     "m_Keywords": [],
+    "m_Dropdowns": [],
+    "m_CategoryData": [
+        {
+            "m_Id": "7dd42257c95c4f41b485d13129d0fd08"
+        }
+    ],
     "m_Nodes": [
         {
             "m_Id": "f99d471a14384503bb0156a03d62431d"
@@ -123,10 +129,11 @@
         "serializedMesh": {
             "m_SerializedMesh": "{\"mesh\":{\"instanceID\":0}}",
             "m_Guid": ""
-        }
+        },
+        "preventRotation": false
     },
     "m_Path": "Sub Graphs",
-    "m_ConcretePrecision": 0,
+    "m_GraphPrecision": 0,
     "m_PreviewMode": 2,
     "m_OutputNode": {
         "m_Id": "f99d471a14384503bb0156a03d62431d"
@@ -412,6 +419,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "7dd42257c95c4f41b485d13129d0fd08",
+    "m_Name": "",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "973b09d7932643f08148b1c54be53be2"
+        },
+        {
+            "m_Id": "d19e60b675644dde9b671461967a7e29"
+        }
+    ]
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "8d830a3f436449d9ba94ee9c6fd444c4",
     "m_Id": 1,
@@ -469,9 +491,13 @@
         "m_GuidSerialized": "e7ad3388-feea-4be6-a8cc-21837c6cbb4f"
     },
     "m_Name": "Movement_Speed",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_973b09d7932643f08148b1c54be53be2",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
@@ -624,9 +650,13 @@
         "m_GuidSerialized": "0b95b861-5a3b-4997-a90b-ba2a8edba9f6"
     },
     "m_Name": "Texture_Scale",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_d19e60b675644dde9b671461967a7e29",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,

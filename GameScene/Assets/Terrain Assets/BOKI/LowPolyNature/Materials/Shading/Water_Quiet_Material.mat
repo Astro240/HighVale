@@ -28,7 +28,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -92,11 +92,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Vector1_01339ea4c1b6474f964296aa80cd5808: 0.2
+    - Vector1_03c8afa2c9e34a21a4914f305016714e: 1
     - Vector1_10ed4378b97e491c87be8332ef96772d: 2.3
+    - Vector1_1db546aa63e1444fb58b61b0246e473b: 10
+    - Vector1_1e250e24948e481d93475228af1ce542: 2
+    - Vector1_24957d9a1a1a4032827e7c50f0247939: 2
     - Vector1_24ff6e9cb7b74dc3b52ca4f73ada0afa: 100
     - Vector1_32e6be4cabf24aa4ad12240993018757: 1.4
     - Vector1_568276ead9984cda9075833e28330979: 1.5
+    - Vector1_6bea09b150814251ab1a36d62b5b8c6d: 0.9
     - Vector1_8028ba5d1357411db27b2787d5e5bfc1: 0.6
+    - Vector1_94dcfc32c454499d8af1946d3f75e139: 5
     - Vector1_97194a2f68ad49d6a97d9679dabf3470: 1
     - Vector1_c0e9288568be4bd78ddb56ee0a140829: 1.2
     - Vector1_c3b9d1d3701047c7a5740d3181d250e2: 0.048
@@ -130,10 +137,12 @@ Material:
     m_Colors:
     - Color_30f6d212bd794f14a1bba9e8d660aeaa: {r: 0.87655747, g: 0.9025365, b: 0.9245283,
         a: 0.8392157}
-    - Color_95c20e50d1264b89ab876f2aac68625d: {r: 0.34117648, g: 0.6117647, b: 0.7647059,
-        a: 0.29803923}
+    - Color_95c20e50d1264b89ab876f2aac68625d: {r: 0.34117645, g: 0.6117647, b: 0.7647059,
+        a: 1}
+    - Color_a389c53ee3ca42da89edeeac013ef05c: {r: 0, g: 0.4864864, b: 1, a: 0}
     - Color_ade3598b96c441028a9427d412d014b5: {r: 0.3254902, g: 0.4862745, b: 0.6603774,
         a: 0.8}
+    - Vector2_4041d5327b7446bc8b5b29c51396a32f: {r: 0, g: 0.2, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
