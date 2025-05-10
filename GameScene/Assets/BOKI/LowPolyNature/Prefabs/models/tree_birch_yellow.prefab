@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2940788148400356756}
   - component: {fileID: 1093020611942549854}
   - component: {fileID: -8157151530256999708}
-  m_Layer: 0
+  - component: {fileID: 2181378338281049313}
+  m_Layer: 3
   m_Name: tree_birch_yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -52,6 +54,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -97,3 +100,30 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5961925924759643581, guid: 8727e407d416cbc45ae90c489aeebf70, type: 3}
+--- !u!205 &2181378338281049313
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453479625222760587}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.40096334
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1093020611942549854}
+  - screenRelativeHeight: 0.15035912
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1093020611942549854}
+  - screenRelativeHeight: 0.004832205
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1093020611942549854}
+  m_Enabled: 1
