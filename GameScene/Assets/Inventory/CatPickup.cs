@@ -59,11 +59,12 @@ public class CatPickup : MonoBehaviour
             return;
         }
 
+        // Instantiate the item GameObject
+        // Instantiate the item GameObject
+        // Instantiate the item GameObject
         GameObject itemGO = Instantiate(inventoryItemPrefab);
-        RectTransform rt = itemGO.GetComponent<RectTransform>();
-        rt.SetParent(inventoryController.SelectedItemGrid.transform, false);
-
         InventoryItem inventoryItem = itemGO.GetComponent<InventoryItem>();
+
         if (inventoryItem == null)
         {
             Debug.LogWarning("InventoryItem script not found on prefab!");
@@ -71,22 +72,36 @@ public class CatPickup : MonoBehaviour
             return;
         }
 
-        // Inject the ItemGrid before calling Set()
+        // Set grid before Set()
         inventoryItem.SetGrid(inventoryController.SelectedItemGrid);
+
+        // Now assign item data
         inventoryItem.Set(catItemData);
 
+        // Find a spot BEFORE adding to grid
         Vector2Int? pos = inventoryController.SelectedItemGrid.FindSpaceForObject(inventoryItem);
         if (pos.HasValue)
         {
+            itemGO.transform.SetParent(inventoryController.SelectedItemGrid.transform, false);
+
             inventoryController.SelectedItemGrid.PlaceItem(inventoryItem, pos.Value.x, pos.Value.y);
+
+            RectTransform rt = itemGO.GetComponent<RectTransform>();
             rt.localPosition = inventoryController.SelectedItemGrid.CalculatePositionOnGrid(inventoryItem, pos.Value.x, pos.Value.y);
-            inventoryController.SetSelectedItem(inventoryItem);
-            Destroy(gameObject); // Remove pickup object from world
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            Destroy(gameObject); // Destroy pickup object
         }
         else
         {
-            Destroy(itemGO); // Not enough space
+            Destroy(itemGO);
             Debug.Log("Not enough space in inventory!");
         }
+
     }
 }
+
+
+

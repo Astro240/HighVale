@@ -9,12 +9,15 @@ public class Enemy : MonoBehaviour
     public float attackRange = 1.5f;     // Range within which the enemy can attack
     public float attackCooldown = 1.5f;  // Time between attacks
 
+    public int money = 50;
+
     private float lastAttackTime = 0f;  // To track attack timing
     private Transform player;            // Reference to the player
-
+    private Combat combat;
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform; 
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        combat = player.GetComponent<Combat>();
     }
 
     void Update()
@@ -46,6 +49,14 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             Die();
+            if (combat != null)
+            {
+                combat.SetMoney(this.money);
+            }
+            else
+            {
+                Debug.LogError("Combat reference is null!");
+            }
         }
     }
 

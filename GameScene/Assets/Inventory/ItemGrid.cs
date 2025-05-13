@@ -168,6 +168,8 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
 
+
+
     public Vector2Int? FindSpaceForObject(InventoryItem itemToInsert)
     {
         int height = gridSizeHeight - itemToInsert.HEIGHT + 1;
@@ -190,4 +192,20 @@ public class ItemGrid : MonoBehaviour
         if (!IsValidGridPosition(x, y)) return null;
         return inventoryItemSlot[x, y];
     }
+
+    public Vector2Int? FindSpaceForItem(InventoryItem itemToInsert)
+    {
+        for (int y = 0; y < gridSizeHeight; y++)
+        {
+            for (int x = 0; x < gridSizeWidth; x++)
+            {
+                if (CheckAvailableSpace(x, y, itemToInsert.WIDTH, itemToInsert.HEIGHT))
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+        return null;
+    }
+
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 using StarterAssets;
 
 public class Combat : MonoBehaviour
@@ -18,6 +20,9 @@ public class Combat : MonoBehaviour
     private StarterAssets.ThirdPersonController pl;
     public bool slice = false; // Track if the player is dead
     public bool isAttacking = false; // Track if the player is currently attacking
+
+    public int money = 0;
+    public Text moneyText; // For regular UI Text
 
     void Start()
     {
@@ -57,6 +62,7 @@ public class Combat : MonoBehaviour
         }
 
         mAnimator.SetTrigger("Attack1");
+
         isAttacking = true; // Set attacking state
 
         // Start stamina regeneration after a delay
@@ -134,5 +140,11 @@ public class Combat : MonoBehaviour
     {
         yield return new WaitForSeconds(0.75f); // Wait for 1 second before allowing another attack
         isAttacking = false; // Reset attacking state
+    }
+
+    public void SetMoney(int money) {
+        this.money += money;
+        Debug.Log("Money set to: " + money);
+        moneyText.text =  ""+ money; // For regular UI Text
     }
 }

@@ -245,10 +245,4 @@ public class InventoryController : MonoBehaviour
             selectedRectTransform.position = mousePosition;
         }
     }
-
-    // Add the SetSelectedItem method:
-    public void SetSelectedItem(InventoryItem item)
-    {
-        selectedItem = item;
-    }
 }

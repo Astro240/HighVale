@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class InventoryItem : MonoBehaviour
+public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public ItemData itemData;
 
@@ -17,17 +18,26 @@ public class InventoryItem : MonoBehaviour
     private RectTransform rectTransform;
     [HideInInspector] public ItemGrid itemGrid; // Now set externally
     private bool isDragging = false;
+    private CanvasGroup canvasGroup;
+
+    private void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+    }
 
     private void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
         if (rectTransform == null)
         {
             Debug.LogError("RectTransform missing on InventoryItem.");
             return;
         }
 
-        // Don't use FindObjectOfType here anymore. This is now injected externally.
         if (itemGrid == null)
         {
             Debug.LogWarning("ItemGrid was not injected. Please assign it manually.");
@@ -54,7 +64,6 @@ public class InventoryItem : MonoBehaviour
 
         this.itemData = itemData;
 
-        // Ensure rectTransform is initialized
         if (rectTransform == null)
         {
             rectTransform = GetComponent<RectTransform>();
@@ -101,25 +110,32 @@ public class InventoryItem : MonoBehaviour
     }
 
 
-    private void OnMouseDown()
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        if (rectTransform != null)
-        {
-            offset = rectTransform.position - (Vector3)Input.mousePosition;
-            isDragging = true;
-        }
+        if (itemGrid == null) return;
+
+        isDragging = true;
+        offset = rectTransform.position - (Vector3)Input.mousePosition;
+        canvasGroup.alpha = 0.6f;
+        canvasGroup.blocksRaycasts = false;
+
+        itemGrid.PickUpItem(onGridPostionX, onGridPostionY);
     }
 
-    private void OnMouseDrag()
+    public void OnDrag(PointerEventData eventData)
     {
-        if (isDragging && rectTransform != null)
+        if (rectTransform != null)
         {
             rectTransform.position = Input.mousePosition + (Vector3)offset;
         }
     }
 
-    private void OnMouseUp()
+    public void OnEndDrag(PointerEventData eventData)
     {
+        isDragging = false;
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = true;
+
         if (itemGrid != null)
         {
             Vector2Int gridPosition = itemGrid.GetTileGridPosition(Input.mousePosition);
@@ -130,6 +146,7 @@ public class InventoryItem : MonoBehaviour
             }
             else
             {
+                itemGrid.PlaceItem(this, onGridPostionX, onGridPostionY);
                 rectTransform.localPosition = itemGrid.CalculatePositionOnGrid(this, onGridPostionX, onGridPostionY);
             }
         }

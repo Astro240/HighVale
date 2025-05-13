@@ -86,6 +86,7 @@ public class BladeModeScript : MonoBehaviour
 
         for (int i = 0; i < hits.Length; i++)
         {
+            Enemy enemy = hits[i].GetComponent<Enemy>();
             SlicedHull hull = SliceObject(hits[i].gameObject, crossMaterial);
             if (hull != null)
             {
@@ -94,7 +95,13 @@ public class BladeModeScript : MonoBehaviour
 
                 AddHullComponents(bottom);
                 AddHullComponents(top);
-
+                if (enemy != null)
+                {
+                    if (combat != null)
+                    {
+                        combat.SetMoney(enemy.money); // Assuming `money` is a public field in Enemy
+                    }
+                }
                 Destroy(hits[i].gameObject);
             }
         }
