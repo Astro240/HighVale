@@ -19,6 +19,7 @@ public class BladeModeScript : MonoBehaviour
     public float zoomFOV = 15;
 
     private ThirdPersonController tl;
+    private Combat combat;
 
     public Transform cutPlane;
 
@@ -36,6 +37,7 @@ public class BladeModeScript : MonoBehaviour
         Cursor.visible = false;
         cutPlane.gameObject.SetActive(false);
         tl = GetComponent<ThirdPersonController>();
+        combat = GetComponent<Combat>();
         anim = GetComponent<Animator>();
         normalFOV = TPCamera.m_Lens.FieldOfView;
         composer = TPCamera.GetCinemachineComponent<CinemachineComposer>(); // Get the composer directly
@@ -128,6 +130,7 @@ public class BladeModeScript : MonoBehaviour
 {
     bladeMode = state;
     tl.bladeMode = state;
+        combat.slice = state;
         tl.LockCameraPosition = state;
     anim.SetBool("bladeMode", bladeMode);
 

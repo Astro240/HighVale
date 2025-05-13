@@ -10,12 +10,14 @@ public class Combat : MonoBehaviour
     public float attackDamage = 10f;
     public float staminaCost = 20f;
     public float attackRange = 2f;
-    public float regenAmount;   
-    public float regenInterval = 1f; 
+    public float regenAmount;
+    public float regenInterval = 1f;
     private Coroutine regenCoroutine;
     private Animator mAnimator;
     private bool isDead = false; // Track if the player is dead
     private StarterAssets.ThirdPersonController pl;
+    public bool slice = false; // Track if the player is dead
+    public bool isAttacking = false; // Track if the player is currently attacking
 
     void Start()
     {
@@ -27,7 +29,7 @@ public class Combat : MonoBehaviour
     {
         if (isDead) return; // Stop processing input if dead
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
             Attack();
         }
@@ -35,7 +37,8 @@ public class Combat : MonoBehaviour
 
     public void Attack()
     {
-        if (isDead) return; // Prevent attack if dead
+        if (isDead || pl.isDodge || slice || isAttacking) return; // Prevent attack if dead, dodging, or already attacking
+
         if (stamina >= staminaCost)
         {
             stamina -= staminaCost;
@@ -52,7 +55,9 @@ public class Combat : MonoBehaviour
             Debug.Log("Not enough stamina to attack!");
             return;
         }
+
         mAnimator.SetTrigger("Attack1");
+        isAttacking = true; // Set attacking state
 
         // Start stamina regeneration after a delay
         if (regenCoroutine == null)
@@ -66,11 +71,12 @@ public class Combat : MonoBehaviour
             if (hitCollider.CompareTag("Enemy"))
             {
                 DamageEnemy(hitCollider.gameObject);
-                return;
+                break; // Exit after damaging the first enemy
             }
         }
 
         Debug.Log("No enemies in range.");
+        StartCoroutine(ResetAttack()); // Start the coroutine to reset the attack state
     }
 
     private void DamageEnemy(GameObject target)
@@ -90,10 +96,10 @@ public class Combat : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (isDead) return; // Prevent taking damage if dead
-        if (pl.isDodge) return;
+        if (isDead || pl.isDodge) return; // Prevent taking damage if dead or dodging
         health -= damage;
         Debug.Log("Took damage: " + damage + ". Remaining health: " + health);
+        mAnimator.SetTrigger("hit");
 
         if (health <= 0)
         {
@@ -122,5 +128,11 @@ public class Combat : MonoBehaviour
             yield return null; // Wait for the next frame
         }
         regenCoroutine = null; // Reset the coroutine reference when done
+    }
+
+    private IEnumerator ResetAttack()
+    {
+        yield return new WaitForSeconds(0.75f); // Wait for 1 second before allowing another attack
+        isAttacking = false; // Reset attacking state
     }
 }

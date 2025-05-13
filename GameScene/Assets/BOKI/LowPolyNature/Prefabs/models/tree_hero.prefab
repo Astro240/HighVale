@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4359440378522050322}
   - component: {fileID: -1107210689656019492}
   - component: {fileID: 4669237362261020609}
+  - component: {fileID: 7829042166516597929}
   m_Layer: 0
   m_Name: tree_hero
   m_TagString: Untagged
@@ -127,3 +128,17 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4359440378522050322}
   m_Enabled: 1
+--- !u!136 &7829042166516597929
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2846041444909760199}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.97
+  m_Height: 25.152565
+  m_Direction: 1
+  m_Center: {x: 0, y: 10.912865, z: 0}

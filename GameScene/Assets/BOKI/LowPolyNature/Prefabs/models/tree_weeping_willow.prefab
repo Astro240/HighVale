@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8413099012797170617}
   - component: {fileID: 5190145377575684188}
   - component: {fileID: 35427098069181233}
+  - component: {fileID: 8499150755704697263}
   m_Layer: 0
   m_Name: tree_weeping_willow
   m_TagString: Untagged
@@ -127,3 +128,17 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8413099012797170617}
   m_Enabled: 1
+--- !u!136 &8499150755704697263
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8052902921309299308}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.01
+  m_Height: 12.087802
+  m_Direction: 1
+  m_Center: {x: 0, y: 5.1578593, z: 0}

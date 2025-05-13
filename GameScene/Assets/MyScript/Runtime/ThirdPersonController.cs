@@ -104,7 +104,7 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
-
+        private Combat combat;
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
@@ -139,6 +139,7 @@ namespace StarterAssets
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             bladeMode = false;
+            combat = GetComponent<Combat>();
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -168,7 +169,7 @@ namespace StarterAssets
 
             if (Input.GetKeyDown(KeyCode.C))
             {
-                if (!isDodge) StartCoroutine(Dodge());
+                if (!isDodge && !combat.isAttacking) StartCoroutine(Dodge());
             }
         }
         IEnumerator Dodge()
