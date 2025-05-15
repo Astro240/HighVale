@@ -180,7 +180,7 @@ public class Combat : MonoBehaviour
     private IEnumerator ReloadSceneAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload curWrent scene
     }
 
     public IEnumerator RegenerateStamina(float targetStamina, float regenSpeed)
