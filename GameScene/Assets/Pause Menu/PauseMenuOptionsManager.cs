@@ -70,7 +70,7 @@ public class PauseMenuOptionsManager : MonoBehaviour
     // Called by Volume slider
     public void SetVolume(float volume)
     {
-        AudioListener.volume = volume;
+        //AudioListener.volume = volume;
     }
 
     // Called by "Options" button in Pause Panel

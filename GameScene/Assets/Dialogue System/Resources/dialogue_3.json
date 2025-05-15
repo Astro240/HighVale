@@ -1,0 +1,24 @@
+{
+  "lines": [
+    {
+      "characterName": "Trader Olric",
+      "dialogueText": "Hail, traveler! Looking to trade or learn the trade?"
+    },
+    {
+      "characterName": "Trader Olric",
+      "dialogueText": "Set your price high enough to earn, low enough to move. Balance, always."
+    },
+    {
+      "characterName": "Trader Olric",
+      "dialogueText": "But don’t be afraid to haggle. It’s not war—it’s dance. Know when to yield, and when to stand firm."
+    },
+    {
+      "characterName": "Trader Olric",
+      "dialogueText": "Never cheat a man. A coin earned in honesty returns in plenty. A coin earned in deceit brings ruin."
+    },
+    {
+      "characterName": "Trader Olric",
+      "dialogueText": "Trade is trust. Guard your name more than your gold."
+    }
+  ]
+}

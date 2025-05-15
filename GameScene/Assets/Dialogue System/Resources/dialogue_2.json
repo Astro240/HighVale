@@ -1,0 +1,24 @@
+{
+  "lines": [
+    {
+      "characterName": "Merchant Gregor",
+      "dialogueText": "Ah, welcome! You’ve got the eyes of a trader, don’t you?"
+    },
+    {
+      "characterName": "Merchant Gregor",
+      "dialogueText": "Lesson one—know what you’re selling, inside and out."
+    },
+    {
+      "characterName": "Merchant Gregor",
+      "dialogueText": "I sell spices from the Eastern Isles. I know where each seed was grown, what dish it suits, and what story it tells."
+    },
+    {
+      "characterName": "Merchant Gregor",
+      "dialogueText": "If you don’t believe in your goods, how can you expect others to buy them?"
+    },
+    {
+      "characterName": "Merchant Gregor",
+      "dialogueText": "And listen to your buyers. A good merchant listens more than he speaks."
+    }
+  ]
+}

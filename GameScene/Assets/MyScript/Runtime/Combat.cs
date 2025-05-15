@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using StarterAssets;
+using UnityEngine.SceneManagement;
 
 public class Combat : MonoBehaviour
 {
@@ -173,6 +174,13 @@ public class Combat : MonoBehaviour
         }
         isDead = true; // Set dead state
         Debug.Log("Player has died!");
+        StartCoroutine(ReloadSceneAfterDelay(3f)); // Reload after 3 seconds
+    }
+
+    private IEnumerator ReloadSceneAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
     }
 
     public IEnumerator RegenerateStamina(float targetStamina, float regenSpeed)
