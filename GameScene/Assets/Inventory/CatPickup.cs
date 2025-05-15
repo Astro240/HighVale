@@ -59,12 +59,11 @@ public class CatPickup : MonoBehaviour
             return;
         }
 
-        // Instantiate the item GameObject
-        // Instantiate the item GameObject
-        // Instantiate the item GameObject
         GameObject itemGO = Instantiate(inventoryItemPrefab);
-        InventoryItem inventoryItem = itemGO.GetComponent<InventoryItem>();
+        RectTransform rt = itemGO.GetComponent<RectTransform>();
+        rt.SetParent(inventoryController.SelectedItemGrid.transform, false);
 
+        InventoryItem inventoryItem = itemGO.GetComponent<InventoryItem>();
         if (inventoryItem == null)
         {
             Debug.LogWarning("InventoryItem script not found on prefab!");
@@ -72,36 +71,26 @@ public class CatPickup : MonoBehaviour
             return;
         }
 
-        // Set grid before Set()
+        // Inject the ItemGrid before calling Set()
         inventoryItem.SetGrid(inventoryController.SelectedItemGrid);
-
-        // Now assign item data
         inventoryItem.Set(catItemData);
 
-        // Find a spot BEFORE adding to grid
         Vector2Int? pos = inventoryController.SelectedItemGrid.FindSpaceForObject(inventoryItem);
         if (pos.HasValue)
         {
-            itemGO.transform.SetParent(inventoryController.SelectedItemGrid.transform, false);
-
             inventoryController.SelectedItemGrid.PlaceItem(inventoryItem, pos.Value.x, pos.Value.y);
-
-            RectTransform rt = itemGO.GetComponent<RectTransform>();
             rt.localPosition = inventoryController.SelectedItemGrid.CalculatePositionOnGrid(inventoryItem, pos.Value.x, pos.Value.y);
 
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            // ADD THIS CODE HERE:  Reset cursor state
+            //Cursor.lockState = CursorLockMode.None;
+            //Cursor.visible = true;
 
-            Destroy(gameObject); // Destroy pickup object
+            Destroy(gameObject); // Remove pickup object from world
         }
         else
         {
-            Destroy(itemGO);
+            Destroy(itemGO); // Not enough space
             Debug.Log("Not enough space in inventory!");
         }
-
     }
 }
-
-
-

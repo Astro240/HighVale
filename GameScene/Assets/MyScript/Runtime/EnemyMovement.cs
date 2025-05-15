@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour
     public float stopDistance = 2f; // Distance at which the enemy stops in front of the player
     NavMeshAgent agent;
     Animator animator;
-
+    public bool walking;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,10 +28,16 @@ public class EnemyMovement : MonoBehaviour
             if (distanceToPlayer > stopDistance)
             {
                 agent.destination = PlayerTransform.position; // Move towards the player
+                if (!walking)
+                {
+                    animator.SetTrigger("walk");
+                    walking = true;
+                }
             }
             else
             {
                 agent.ResetPath(); // Stop moving when close enough
+                walking = false;
             }
 
             animator.SetFloat("Speed", agent.velocity.magnitude);
@@ -39,6 +45,7 @@ public class EnemyMovement : MonoBehaviour
         else
         {
             agent.ResetPath(); // This will stop the agent from moving if outside follow distance
+            walking = false;
         }
     }
 }

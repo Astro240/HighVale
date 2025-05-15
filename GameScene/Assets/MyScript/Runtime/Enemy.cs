@@ -14,10 +14,12 @@ public class Enemy : MonoBehaviour
     private float lastAttackTime = 0f;  // To track attack timing
     private Transform player;            // Reference to the player
     private Combat combat;
+    private Animator anim;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         combat = player.GetComponent<Combat>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -33,12 +35,25 @@ public class Enemy : MonoBehaviour
         if (Time.time >= lastAttackTime + attackCooldown)
         {
             lastAttackTime = Time.time;
-            Debug.Log("Enemy attacked! Dealt " + attackDamage + " damage.");
-            Combat playerScript = player.GetComponent<Combat>();
-            if (playerScript != null)
-            {
-                playerScript.TakeDamage(attackDamage);
-            }
+            Debug.Log("Enemy attacked! Animation triggered.");
+            anim.SetTrigger("attack");
+
+            // Start a coroutine to handle the delay
+            StartCoroutine(DealDamageWithDelay(0.5f)); // Adjust the delay time as needed
+        }
+    }
+
+    private IEnumerator DealDamageWithDelay(float delay)
+    {
+        // Wait for the specified delay
+        yield return new WaitForSeconds(delay);
+
+        // Deal damage to the player after the delay
+        Combat playerScript = player.GetComponent<Combat>();
+        if (playerScript != null)
+        {
+            playerScript.TakeDamage(attackDamage);
+            Debug.Log("Player took damage: " + attackDamage);
         }
     }
 

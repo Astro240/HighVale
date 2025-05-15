@@ -66,6 +66,14 @@ public class InventoryController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             inventoryVisible = !inventoryVisible;
+            if (inventoryVisible)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            Cursor.visible = inventoryVisible;
             inventoryCanvas.SetActive(inventoryVisible);
         }
 
@@ -110,7 +118,7 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private void InsertItem(InventoryItem itemToInsert)
+    public void InsertItem(InventoryItem itemToInsert)
     {
         Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForObject(itemToInsert);
 

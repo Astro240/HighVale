@@ -14,21 +14,27 @@ public class Combat : MonoBehaviour
     public float attackRange = 2f;
     public float regenAmount;
     public float regenInterval = 1f;
-    private Coroutine regenCoroutine;
+    public Coroutine regenCoroutine;
     private Animator mAnimator;
     private bool isDead = false; // Track if the player is dead
     private StarterAssets.ThirdPersonController pl;
     public bool slice = false; // Track if the player is dead
     public bool isAttacking = false; // Track if the player is currently attacking
-
+    public bool inInventory = false; // Track if the player is currently in inv
+    public bool gothit = false;
+    public int healthPot = 4;
     public int money = 0;
     public Text moneyText; // For regular UI Text
+    public Text healthText; // For regular UI Text
 
     void Start()
     {
         pl = GetComponent<ThirdPersonController>();
         mAnimator = GetComponent<Animator>();
+        SetHealthPot();
     }
+
+    private bool isHealing = false; // Track if healing is in progress
 
     void Update()
     {
@@ -38,11 +44,41 @@ public class Combat : MonoBehaviour
         {
             Attack();
         }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (healthPot > 0 && !isHealing) // Check if not already healing
+            {
+                StartCoroutine(Heal());
+            }
+        }
     }
 
+    private IEnumerator Heal()
+    {
+        isHealing = true; // Set healing in progress
+
+        mAnimator.SetTrigger("drink");
+        health += 30;
+        if (health > 100)
+        {
+            health = 100;
+        }
+        healthPot--;
+        SetHealthPot();
+
+        yield return new WaitForSeconds(1.5f); // Wait for 1 second        
+        isHealing = false; // Reset healing state
+    }
+
+    public void SetHealthPot() {
+        if (healthText != null)
+        {
+            healthText.text = "" + healthPot;
+        }
+    }
     public void Attack()
     {
-        if (isDead || pl.isDodge || slice || isAttacking) return; // Prevent attack if dead, dodging, or already attacking
+        if (isDead || pl.isDodge || slice || isAttacking || inInventory || gothit) return; // Prevent attack if dead, dodging, or already attacking
 
         if (stamina >= staminaCost)
         {
@@ -60,16 +96,21 @@ public class Combat : MonoBehaviour
             Debug.Log("Not enough stamina to attack!");
             return;
         }
-
         mAnimator.SetTrigger("Attack1");
-
         isAttacking = true; // Set attacking state
+        // Start a coroutine to handle the attack delay
+        StartCoroutine(PerformAttack());
 
         // Start stamina regeneration after a delay
         if (regenCoroutine == null)
         {
             regenCoroutine = StartCoroutine(RegenerateStamina(100f, regenAmount)); // Adjust the regenSpeed as needed
         }
+    }
+
+    private IEnumerator PerformAttack()
+    {
+        yield return new WaitForSeconds(0.5f); // Delay for half a second
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
         foreach (var hitCollider in hitColliders)
@@ -106,7 +147,8 @@ public class Combat : MonoBehaviour
         health -= damage;
         Debug.Log("Took damage: " + damage + ". Remaining health: " + health);
         mAnimator.SetTrigger("hit");
-
+        gothit = true;
+        StartCoroutine(GettingHit());
         if (health <= 0)
         {
             Die();
@@ -123,7 +165,7 @@ public class Combat : MonoBehaviour
         Debug.Log("Player has died!");
     }
 
-    private IEnumerator RegenerateStamina(float targetStamina, float regenSpeed)
+    public IEnumerator RegenerateStamina(float targetStamina, float regenSpeed)
     {
         yield return new WaitForSeconds(1f); // Wait for 1 second before starting regeneration
 
@@ -141,7 +183,11 @@ public class Combat : MonoBehaviour
         yield return new WaitForSeconds(0.75f); // Wait for 1 second before allowing another attack
         isAttacking = false; // Reset attacking state
     }
-
+    private IEnumerator GettingHit()
+    {
+        yield return new WaitForSeconds(0.4f); // Wait for 1 second before allowing another attack
+        gothit = false; // Reset attacking state
+    }
     public void SetMoney(int money) {
         this.money += money;
         Debug.Log("Money set to: " + money);

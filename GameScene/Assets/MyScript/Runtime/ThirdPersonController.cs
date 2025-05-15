@@ -165,11 +165,11 @@ namespace StarterAssets
 
             JumpAndGravity();
             GroundedCheck();
-            if(!isDodge && !bladeMode) Move();
+            if(!isDodge && !bladeMode && !combat.gothit) Move();
 
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (!isDodge && !combat.isAttacking) StartCoroutine(Dodge());
+                if (!isDodge && !combat.isAttacking && !combat.gothit && !(combat.stamina <20)) StartCoroutine(Dodge());
             }
         }
         IEnumerator Dodge()
@@ -177,7 +177,16 @@ namespace StarterAssets
             isDodge = true;
             float timer = 0;
             _animator.SetTrigger("Dodge");
-
+            combat.stamina -= 20;
+            if (combat.regenCoroutine != null)
+            {
+                StopCoroutine(combat.regenCoroutine);
+                combat.regenCoroutine = null;
+            }
+            if (combat.regenCoroutine == null)
+            {
+                combat.regenCoroutine = StartCoroutine(combat.RegenerateStamina(100f, combat.regenAmount)); // Adjust the regenSpeed as needed
+            }
             // Calculate dodge direction (forward) based on current rotation
             Vector3 dodgeDirection = transform.forward;
             Vector3 verticalVelocity = Vector3.zero; // Initialize vertical velocity
