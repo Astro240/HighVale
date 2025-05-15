@@ -134,7 +134,7 @@ namespace StarterAssets
         [SerializeField] AnimationCurve dodgeCurve;
         public bool isDodge;
         float dodgeTimer;
-
+        public bool dodgeCool = false;
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
@@ -165,15 +165,16 @@ namespace StarterAssets
 
             JumpAndGravity();
             GroundedCheck();
-            if(!isDodge && !bladeMode && !combat.gothit) Move();
+            if(!isDodge && !bladeMode && !combat.gothit && !combat.isDead) Move();
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (!isDodge && !combat.isAttacking && !combat.gothit && !(combat.stamina <20)) StartCoroutine(Dodge());
+                if (!isDodge && !combat.isAttacking && !combat.gothit && !(combat.stamina <20) && !combat.isHealing && !combat.isDead && !dodgeCool) StartCoroutine(Dodge());
             }
         }
         IEnumerator Dodge()
         {
+            dodgeCool = true;
             isDodge = true;
             float timer = 0;
             _animator.SetTrigger("Dodge");
@@ -213,10 +214,14 @@ namespace StarterAssets
                 timer += Time.deltaTime;
                 yield return null;
             }
-
             isDodge = false;
+            StartCoroutine(DodgeDelay(1f));
         }
-
+        private IEnumerator DodgeDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            dodgeCool = false;
+        }
         private void LateUpdate()
         {
             CameraRotation();

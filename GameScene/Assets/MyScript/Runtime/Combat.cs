@@ -16,7 +16,7 @@ public class Combat : MonoBehaviour
     public float regenInterval = 1f;
     public Coroutine regenCoroutine;
     private Animator mAnimator;
-    private bool isDead = false; // Track if the player is dead
+    public bool isDead = false; // Track if the player is dead
     private StarterAssets.ThirdPersonController pl;
     public bool slice = false; // Track if the player is dead
     public bool isAttacking = false; // Track if the player is currently attacking
@@ -26,7 +26,7 @@ public class Combat : MonoBehaviour
     public int money = 0;
     public Text moneyText; // For regular UI Text
     public Text healthText; // For regular UI Text
-
+    public float maxhealth = 100f;
     void Start()
     {
         pl = GetComponent<ThirdPersonController>();
@@ -34,7 +34,7 @@ public class Combat : MonoBehaviour
         SetHealthPot();
     }
 
-    private bool isHealing = false; // Track if healing is in progress
+    public bool isHealing = false; // Track if healing is in progress
 
     void Update()
     {
@@ -140,7 +140,17 @@ public class Combat : MonoBehaviour
             Debug.Log("Target does not have an Enemy component.");
         }
     }
-
+    public void RestoreHealth(int amount)
+    {
+        health += amount;
+        if (health > maxhealth)
+        {
+            health = maxhealth;
+            healthPot = 4;
+            SetHealthPot();
+        }
+        Debug.Log("Health restored! Current health: " + health);
+    }
     public void TakeDamage(float damage)
     {
         if (isDead || pl.isDodge) return; // Prevent taking damage if dead or dodging
