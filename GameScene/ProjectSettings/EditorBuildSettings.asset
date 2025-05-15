@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/BOKI/LowPolyNature/Scenes/Bader Scene.unity
-    guid: c7cc17f00b94ac7458a255bd221c75eb
+    path: Assets/Main Menu/MainMenu.unity
+    guid: 1a27e8b494cfbd04d9cbbdd17a33265e
+  - enabled: 1
+    path: Assets/BOKI/LowPolyNature/Scenes/DemoScene.unity
+    guid: 8fb6346f292198843aa018d9e2c190d3
   m_configObjects: {}

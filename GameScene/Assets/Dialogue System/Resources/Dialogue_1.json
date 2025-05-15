@@ -1,0 +1,24 @@
+{
+  "lines": [
+    {
+      "characterName": "Old man Brad",
+      "dialogueText": "Hey there young one"
+    },
+    {
+      "characterName": "Old man Brad",
+      "dialogueText": "Do you see this nice tree here, these are the trees grown in ages of heroes of the past"
+    },
+    {
+      "characterName": "Old man Brad",
+      "dialogueText": "There are four more trees just like this one"
+    },
+    {
+      "characterName": "Old man Brad",
+      "dialogueText": "Two are in these plains, one is in the forest near the graveyard, and one is in the valley"
+    },
+    {
+      "characterName": "Old man Brad",
+      "dialogueText": "I would’ve went and paid respects myself but my legs aren’t serving me"
+    }
+  ]
+}
